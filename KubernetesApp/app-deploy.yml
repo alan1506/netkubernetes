@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deploy
+  labels:
+    name: app-deploy
+    app: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: app
+      type: netaapi
+  template:
+    metadata:
+      name: app-pod
+      labels:
+        name: app
+        type: netaapi
+    spec:
+      containers:
+      - name: app-api
+        image: alan1506/net-sql-alan:v1.0
+        ports:
+          - containerPort: 5000
+        env:
+          - name: ConnectionStrings__SQLServerConnection
+            value: Data Source=mssql-service; Initial Catalog=InmuebleDB; User Id=sa; password=VaxiDrez2005$
